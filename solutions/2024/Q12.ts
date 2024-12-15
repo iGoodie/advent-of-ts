@@ -5,23 +5,17 @@ type FormatName<N extends readonly [`${string}`, "M" | "F", `${number}`]> = {
   rating: NaughtyOrNice<N[0]>;
 };
 
-type IsEven<T extends number> =
-  `${T}` extends `${string}${infer TLast extends number}`
-    ? IsEven<TLast>
-    : T extends 0 | 2 | 4 | 6 | 8
-    ? true
-    : false;
+type IsEven<T extends number> = `${T}` extends `${string}${infer TLast extends number}`
+  ? IsEven<TLast>
+  : T extends 0 | 2 | 4 | 6 | 8
+  ? true
+  : false;
 
-type StrLen<
-  T extends string,
-  $length extends "🥥"[] = []
-> = T extends `${string}${infer TRest}`
+type StrLen<T extends string, $length extends "🥥"[] = []> = T extends `${string}${infer TRest}`
   ? StrLen<TRest, [...$length, "🥥"]>
   : $length["length"];
 
-type NaughtyOrNice<TName extends string> = [IsEven<StrLen<TName>>] extends [
-  true
-]
+type NaughtyOrNice<TName extends string> = [IsEven<StrLen<TName>>] extends [true]
   ? "naughty"
   : "nice";
 
