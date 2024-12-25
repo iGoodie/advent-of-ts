@@ -1,21 +1,21 @@
 // HOTScript was a huge inspiration.
 // See https://github.com/gvergnaud/hotscript/blob/fccfc2fbc581f5ba93e05688697f1421dca66906/src/internals/core/Core.ts#L79
 
-declare const FN_ARGS: unique symbol;
-declare const FN_ARG0: unique symbol;
+declare const ARGS: unique symbol;
+declare const ARG0: unique symbol;
 declare const RETURN: unique symbol;
-type ARGS = typeof FN_ARGS;
-type ARG0 = typeof FN_ARG0;
-type FN_RETURN = typeof RETURN;
+type ARGS = typeof ARGS;
+type ARG0 = typeof ARG0;
+type RETURN = typeof RETURN;
 
 interface Functor {
-  [FN_ARGS]: unknown;
-  [FN_ARG0]: this[ARGS] extends [infer Arg, ...any] ? Arg : never;
+  [ARGS]: unknown;
+  [ARG0]: this[ARGS] extends [infer Arg, ...any] ? Arg : never;
   [RETURN]: unknown;
 }
 
 /** Apply */
-type Apply<Fn extends Functor, T> = (Fn & { [FN_ARGS]: [T] })[FN_RETURN];
+type Apply<Fn extends Functor, T> = (Fn & { [ARGS]: [T] })[RETURN];
 
 /** Push an element to a tuple */
 interface Push extends Functor {
